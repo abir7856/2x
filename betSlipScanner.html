@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bet Slip Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="flex items-center justify-center min-h-screen bg-[#eceff4] relative"
+  >
+    <!-- Header Image -->
+    <header class="fixed top-0 w-full">
+      <img class="w-full" src="img/betSlipScanner.jpg" alt="" />
+    </header>
+
+    <!-- Main Content -->
+    <div class="bg-white w-11/12 rounded-xl shadow-md p-5 absolute top-40">
+      <div class="relative mt-2">
+        <p id="infoText" class="text-[#607f9c] text-sm font-medium mb-4">
+          Enter or scan your bet slip code to get all the bet details
+        </p>
+
+        <div class="relative">
+          <label
+            for="betSlip"
+            id="betLabel"
+            class="absolute left-0 top-2 text-[#607f9c] text-sm transition-all duration-200 pointer-events-none"
+          >
+            Bet slip number
+          </label>
+          <input
+            id="betSlip"
+            type="text"
+            class="w-full border-b-[2px] border-gray-300 bg-transparent pt-5 pb-2 text-gray-800 focus:outline-none focus:border-[#498cd2]"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Buttons -->
+    <footer
+      class="fixed bottom-0 w-full bg-white p-4 rounded-t-xl shadow-[0_-2px_8px_rgba(0,0,0,0.05)]"
+    >
+      <div class="flex flex-col gap-3">
+        <button
+          class="flex-1 py-3 bg-[#dbebfa] text-[#1c78c9] rounded-md font-medium hover:bg-blue-200 transition"
+        >
+          Scan
+        </button>
+        <button
+          id="checkBtn"
+          class="flex-1 py-3 bg-[#498cd2] text-slate-400 rounded-md font-medium disabled:bg-[#dee5eb] disabled:text-slate-400 transition"
+          disabled
+        >
+          Check
+        </button>
+      </div>
+    </footer>
+
+    <script>
+      const input = document.getElementById("betSlip");
+      const label = document.getElementById("betLabel");
+      const checkBtn = document.getElementById("checkBtn");
+
+      // Floating label color change
+      input.addEventListener("focus", () =>
+        label.classList.add("text-[#498cd2]")
+      );
+      input.addEventListener("blur", () =>
+        label.classList.remove("text-[#498cd2]")
+      );
+
+      // Enable/disable Check button
+      input.addEventListener("input", () => {
+        const hasValue = input.value.trim() !== "";
+        checkBtn.disabled = !hasValue;
+
+        if (hasValue) {
+          checkBtn.classList.remove("text-slate-400");
+          checkBtn.classList.add("text-white");
+        } else {
+          checkBtn.classList.remove("text-white");
+          checkBtn.classList.add("text-slate-400");
+        }
+      });
+
+      // Search and redirect to full bet details page
+      checkBtn.addEventListener("click", () => {
+        const betSlipNumber = input.value.trim();
+        if (!betSlipNumber) {
+          alert("Please enter a bet slip number.");
+          return;
+        }
+
+        try {
+          // Try mapping: bet slip number -> bet id
+          const mappedId =
+            localStorage.getItem("betslip_" + betSlipNumber) ||
+            localStorage.getItem("BETSLIP_" + betSlipNumber) ||
+            localStorage.getItem(betSlipNumber); // legacy fallback
+
+          const directBetId = mappedId || betSlipNumber;
+
+          // Verify bet data exists
+          const betDataKey = `bet_${directBetId}`;
+          const betJson = localStorage.getItem(betDataKey);
+
+          if (betJson) {
+            // Redirect to the dedicated details page which reads localStorage
+            window.location.href = `betDetails.html?id=${encodeURIComponent(directBetId)}`;
+            return;
+          }
+
+          // If no bet JSON found, inform the user
+          console.error("No bet found with ID or bet slip number:", betSlipNumber);
+          alert("❌ No bet found. Please check the bet slip number and try again.");
+        } catch (err) {
+          console.error("Error searching for bet:", err);
+          alert("⚠️ Something went wrong while searching. Check console for details.");
+        }
+      });
+    </script>
+  </body>
+</html>

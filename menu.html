@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- DaisyUI CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <title>1xbet</title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+      .shadow-top {
+        box-shadow: 0 -10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 -4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Active underline animation */
+      .active-line {
+        position: absolute;
+        bottom: -7px;
+        left: 50%; /* মাঝখান থেকে শুরু */
+        transform: translateX(-50%); /* perfectly center করা */
+        width: 270%; /* width বাড়ানো হয়েছে */
+        height: 3px; /* underline মোটা করা হয়েছে */
+        background-color: #488cd2;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+
+      /* Slide transition for body images */
+      .slide {
+        transition: transform 0.4s ease, opacity 0.4s ease;
+      }
+
+      /* Existing slide-out animation (no change) */
+      .slide-out-left {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      .slide-in-right {
+        animation: slideFromRightToLeft 0.4s ease forwards;
+      }
+      .hidden-img {
+        display: none;
+      }
+
+      /* Slide animation (direction controlled) */
+      .slide-in-left {
+        transform: translateX(0);
+        opacity: 1;
+        animation: slideFromLeft 0.4s ease forwards;
+      }
+
+      /* keyframes for both directions */
+      @keyframes slideFromLeft {
+        from {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideFromRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes slideFromRightToLeft {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* Keyframe for smooth slide */
+      @keyframes slideFromLeft {
+        0% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .slide-from-left {
+        animation: slideFromLeft 0.5s ease forwards;
+      }
+    </style>
+  </head>
+  <body class="bg-[#eceff4]">
+    <header class="fixed top-0 w-full bg-[#eceff4] z-50 shadow-md">
+      <h3
+        class="absolute top-[51px] left-[61px] text-sm text-[#183350] font-semibold"
+      >
+        A S M ABDULLAH HIL BAKYEE
+      </h3>
+      <p
+        id="mainBalance"
+        class="absolute top-[112px] left-[70px] text-base text-[#183350] font-semibold"
+      >
+        0 &#x20B9;
+      </p>
+
+      <!-- TOP Button -->
+      <button class="absolute top-[159px] left-[29px]" id="topBtn">
+        <div class="relative">
+          <img
+            class="w-6 h-6"
+            id="topImg"
+            src="img/menu/topBtnActv.png"
+            alt=""
+          />
+          <p
+            class="pt-[6px] text-[10px] font-semibold relative"
+            id="topText"
+            style="color: #488cd2"
+          >
+            Top
+            <span id="topUnderline" class="active-line"></span>
+          </p>
+        </div>
+      </button>
+
+      <!-- Other Button -->
+      <button class="absolute top-[160px] right-[30px]" id="othersBtn">
+        <div class="relative">
+          <img
+            class="w-6 h-6"
+            id="othersImg"
+            src="img/menu/othersBtn.png"
+            alt=""
+          />
+          <p
+            class="pt-[5px] text-[10px] font-semibold relative"
+            id="othersText"
+            style="color: #5f7f98"
+          >
+            Other
+          </p>
+        </div>
+      </button>
+
+      <div class="flex">
+        <p
+          class="absolute top-[189px] left-[109px] text-[10px] text-[#5f7f98] font-semibold"
+        >
+          Sports
+        </p>
+        <p
+          class="absolute top-[189px] left-[192px] text-[10px] text-[#5f7f98] font-semibold"
+        >
+          Casino
+        </p>
+        <p
+          class="absolute top-[189px] left-[269px] text-[10px] text-[#5f7f98] font-semibold"
+        >
+          1xGames
+        </p>
+      </div>
+
+      <img class="w-full" src="img/menu/menu_header.jpg" alt="" />
+    </header>
+
+    <main class="relative overflow-hidden pb-20">
+      <img
+        id="displayImage"
+        class="w-full slide mt-[211px]"
+        src="img/menu/body.jpg"
+        alt="body"
+      />
+      <img
+        id="othersImage"
+        class="w-full slide hidden-img mt-[211px]"
+        src="img/menu/othersBody.jpg"
+        alt="othersBody"
+      />
+      <!-- Clickable area for Bet Slip Scanner -->
+      <a
+        href="betSlipScanner.html"
+        id="betSlipScannerBtn"
+        class="absolute top-[845px] w-full h-[80px] cursor-pointer z-20 hidden"
+      ></a>
+
+      <input type="file" id="imageInput" accept="image/*" hidden />
+    </main>
+
+    <section
+      class="fixed bottom-0 w-full bg-white shadow-lg mx-auto pb-[20px]"
+      id="bottom"
+    >
+      <div
+        class="relative flex justify-around items-end h-16 md:h-[156px] pb-3 sm:pb-5 md:pb-6 shadow-top"
+      >
+        <!-- Bottom buttons (unchanged) -->
+        <a href="index.html">
+          <div
+            class="nav-item flex flex-col items-center active"
+            data-name="popular"
+            data-type="normal"
+          >
+            <img
+              src="img/Bottom/popular.png"
+              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+              alt="Popular"
+            />
+            <p class="text-xs md:text-lg font-medium nav-text text-[#5e809b]">
+              Popular
+            </p>
+          </div>
+        </a>
+        <div
+          class="nav-item flex flex-col items-center"
+          data-name="fvrt"
+          data-type="normal"
+        >
+          <img
+            src="img/Bottom/fvrt.png"
+            class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+            alt="Favorites"
+          />
+          <p
+            class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
+          >
+            Favorites
+          </p>
+        </div>
+        <div
+          class="nav-item flex flex-col items-center"
+          data-name="mainB"
+          data-type="betslip"
+        >
+          <div
+            class="relative -top-2 md:-top-6 rounded-full flex items-center justify-center shadow-lg betslip-icon sm:w-24 sm:h-24 md:w-32 md:h-32"
+          >
+            <img
+              src="img/Bottom/mainB.png"
+              class="w-12 h-12 md:w-30 md:h-30"
+              alt="Bet slip"
+            />
+          </div>
+          <p
+            class="text-xs sm:text-xl md:text-3xl font-medium mt-1 sm:mt-2 nav-text text-[#5e809b]"
+          >
+            Bet slip
+          </p>
+        </div>
+        <a href="betHistory.html">
+          <div
+            class="nav-item flex flex-col items-center"
+            data-name="history"
+            data-type="normal"
+          >
+            <img
+              src="img/Bottom/history.png"
+              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+              alt="History"
+            />
+            <p
+              class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
+            >
+              History
+            </p>
+          </div>
+        </a>
+        <div
+          class="nav-item flex flex-col items-center"
+          data-name="menu"
+          data-type="normal"
+        >
+          <img
+            src="img/Bottom/menuActv.png"
+            class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+            alt="Menu"
+          />
+          <p
+            class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#488cd2]"
+          >
+            Menu
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const img = document.getElementById("displayImage");
+      const othersImgEl = document.getElementById("othersImage");
+      const topBtn = document.getElementById("topBtn");
+      const othersBtn = document.getElementById("othersBtn");
+      const topImg = document.getElementById("topImg");
+      const othersImg = document.getElementById("othersImg");
+      const topText = document.getElementById("topText");
+      const othersText = document.getElementById("othersText");
+      const fileInput = document.getElementById("imageInput");
+      const STORAGE_KEY = "menu_savedImage";
+      const savedImage = localStorage.getItem(STORAGE_KEY);
+      const topUnderline = document.getElementById("topUnderline");
+
+      if (savedImage) img.src = savedImage;
+
+      img.addEventListener("click", () => fileInput.click());
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const imageData = event.target.result;
+            img.src = imageData;
+            localStorage.setItem(STORAGE_KEY, imageData);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // Editable Main Balance
+      function makeEditable(pElement) {
+        pElement.addEventListener("click", () => {
+          const currentValue = pElement.innerText;
+          const input = document.createElement("input");
+          input.type = "text";
+          input.value = currentValue;
+          input.className = "text-4xl font-semibold text-[#183350]";
+          input.style.width = "150px";
+          pElement.replaceWith(input);
+          input.focus();
+
+          function saveValue() {
+            const newValue = input.value.trim() || "0";
+            localStorage.setItem("openingAmount", newValue);
+            const newP = document.createElement("p");
+            newP.id = "mainBalance";
+            newP.className =
+              "text-4xl font-semibold text-[#183350] cursor-pointer";
+            newP.innerText = newValue;
+            input.replaceWith(newP);
+            makeEditable(newP);
+          }
+
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") saveValue();
+          });
+          input.addEventListener("blur", saveValue);
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const savedValue = localStorage.getItem("openingAmount");
+        if (savedValue)
+          document.getElementById("mainBalance").innerText = savedValue;
+        makeEditable(document.getElementById("mainBalance"));
+      });
+
+      // 🔹 Toggle between Top & Others
+      function setActive(isTopActive) {
+        const betSlipScannerBtn = document.getElementById("betSlipScannerBtn");
+        if (isTopActive) {
+          topImg.src = "img/menu/topBtnActv.png";
+          othersImg.src = "img/menu/othersBtn.png";
+          topText.style.color = "#488cd2";
+          othersText.style.color = "#5f7f98";
+
+          betSlipScannerBtn.classList.add("hidden");
+
+          topUnderline.style.display = "block";
+
+          // Remove underline from others
+          if (document.getElementById("othersUnderline")) {
+            document.getElementById("othersUnderline").remove();
+          }
+
+          // Transition animation
+          othersImgEl.classList.add("slide-out-left");
+          setTimeout(() => {
+            othersImgEl.classList.add("hidden-img");
+            img.classList.remove("hidden-img");
+            img.classList.add("slide-in-right");
+            othersImgEl.classList.remove("slide-out-left");
+          }, 400);
+        } else {
+          topImg.src = "img/menu/topBtn.png";
+          othersImg.src = "img/menu/othersBtnActv.png";
+          topText.style.color = "#5f7f98";
+          othersText.style.color = "#488cd2";
+
+          betSlipScannerBtn.classList.remove("hidden");
+
+          topUnderline.style.display = "none";
+
+          // Add underline dynamically under Others
+          if (!document.getElementById("othersUnderline")) {
+            const underline = document.createElement("span");
+            underline.className = "active-line";
+            underline.id = "othersUnderline";
+            othersText.appendChild(underline);
+          }
+
+          // Slide effect for othersBody image
+          img.classList.add("slide-out-left");
+          setTimeout(() => {
+            img.classList.add("hidden-img");
+            othersImgEl.classList.remove("hidden-img");
+            othersImgEl.classList.add("slide-in-right");
+            img.classList.remove("slide-out-left");
+          }, 400);
+        }
+      }
+
+      topBtn.addEventListener("click", () => setActive(true));
+      othersBtn.addEventListener("click", () => setActive(false));
+    </script>
+  </body>
+</html>
