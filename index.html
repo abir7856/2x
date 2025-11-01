@@ -84,12 +84,56 @@
           font-size: 2xl !important;
         }
       }
+      
+      /* Video loading styles to prevent loading screen */
+      #startVideo {
+        background: black !important;
+        object-fit: cover;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+      }
+      
+      /* Hide all video controls and loading indicators */
+      #startVideo::-webkit-media-controls {
+        display: none !important;
+      }
+      
+      #startVideo::-webkit-media-controls-panel {
+        display: none !important;
+      }
+      
+      #startVideo::-webkit-media-controls-start-playback-button {
+        display: none !important;
+      }
+      
+      #startVideo::-webkit-media-controls-play-button {
+        display: none !important;
+      }
+      
+      /* Hide video poster completely */
+      video[poster] {
+        background: black !important;
+      }
+      
+      /* Ensure no loading spinner or placeholder */
+      video::before {
+        display: none !important;
+      }
+      
+      /* Hide any loading state */
+      video::-webkit-media-controls-loading-panel {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
     <main class="relative">
       <!-- Starting Video -->
-      <video id="startVideo" autoplay muted playsinline>
+      <video id="startVideo" autoplay muted playsinline preload="auto" style="background: black; visibility: hidden;">
         <source src="img/startVideo.mp4" type="video/mp4" />
       </video>
 
@@ -1341,10 +1385,35 @@
       const video = document.getElementById("startVideo");
       const mainContent = document.getElementById("mainContent");
 
+      // Show video immediately when it can start playing
+      video.addEventListener("loadstart", () => {
+        video.style.visibility = "visible";
+      });
+
+      // Ensure video plays as soon as possible
+      video.addEventListener("loadedmetadata", () => {
+        video.style.visibility = "visible";
+        video.play().catch(e => console.log("Video autoplay failed:", e));
+      });
+
+      // Backup play attempt when video can play
+      video.addEventListener("canplay", () => {
+        video.style.visibility = "visible";
+        if (video.paused) {
+          video.play().catch(e => console.log("Video play failed:", e));
+        }
+      });
+
       // Always play the video when page loads
       video.addEventListener("ended", () => {
         video.style.display = "none";
         mainContent.classList.remove("hidden");
+      });
+
+      // Force play on page load
+      window.addEventListener("load", () => {
+        video.style.visibility = "visible";
+        video.play().catch(e => console.log("Video autoplay on load failed:", e));
       });
     </script>
     <script src="scripts.js"></script>
