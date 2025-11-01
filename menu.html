@@ -194,9 +194,20 @@
     </header>
 
     <main class="relative overflow-hidden pb-20">
+      <!-- Loading screen -->
+      <div
+        id="loadingScreen"
+        class="flex items-center justify-center h-[70vh] bg-[#eceff4] mt-[211px]"
+      >
+        <span
+          class="loading loading-spinner text-[#607f9c]"
+          style="width: 3.5rem; height: 3.5rem"
+        ></span>
+      </div>
+
       <img
         id="displayImage"
-        class="w-full slide mt-[211px]"
+        class="w-full slide mt-[211px] hidden"
         src="img/menu/body.jpg"
         alt="body"
       />
@@ -314,6 +325,19 @@
     </section>
 
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Show loading screen and hide image initially
+        const loadingScreen = document.getElementById("loadingScreen");
+        const displayImage = document.getElementById("displayImage");
+
+        // Show image after 1 second
+        setTimeout(() => {
+          loadingScreen.style.display = "none";
+          displayImage.classList.remove("hidden");
+        }, 1000);
+      });
+
+      // Define global variables for other functionality
       const img = document.getElementById("displayImage");
       const othersImgEl = document.getElementById("othersImage");
       const topBtn = document.getElementById("topBtn");

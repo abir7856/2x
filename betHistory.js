@@ -520,9 +520,14 @@ function openDetailsPage(bet) {
       </header>
 
       <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
+        <!-- Loading screen -->
+        <div id="loadingScreen" class="flex items-center justify-center h-[70vh] bg-[#eceff4]">
+          <span class="loading loading-spinner text-[#607f9c]" style="width: 3.5rem; height: 3.5rem;"></span>
+        </div>
+        
         <img
           id="displayImage"
-          class="pb-16 no-scrollbar"
+          class="pb-16 no-scrollbar hidden"
           src="img/Screenshot_20251017_101934_MelBet.jpg"
           alt="Click to change"
         />
@@ -684,7 +689,15 @@ function openDetailsPage(bet) {
       const menuBtn = document.getElementById("menuBtn");
       const modal = document.getElementById("bottomModal");
       const overlay = document.getElementById("modalOverlay");
-
+      const loadingScreen = document.getElementById("loadingScreen");
+      const img = document.getElementById("displayImage");
+      const fileInput = document.getElementById("imageInput");
+      const STORAGE_KEY = "savedImage_bet_${bet.id}";
+      
+      // Show loading screen first
+      loadingScreen.classList.remove("hidden");
+      img.classList.add("hidden");
+      
       menuBtn.addEventListener("click", () => {
         modal.classList.remove("translate-y-full");
         overlay.classList.remove("hidden");
@@ -695,25 +708,38 @@ function openDetailsPage(bet) {
         overlay.classList.add("hidden");
       });
 
-      const img = document.getElementById("displayImage");
-      const fileInput = document.getElementById("imageInput");
-      const STORAGE_KEY = "savedImage_bet_${bet.id}";
+      // Load saved image if exists
       const savedImage = localStorage.getItem(STORAGE_KEY);
-
       if (savedImage) {
         img.src = savedImage;
       }
+      
+      // Show image after loading delay (1.5 seconds)
+      setTimeout(() => {
+        loadingScreen.classList.add("hidden");
+        img.classList.remove("hidden");
+      }, 1500);
 
       img.addEventListener("click", () => fileInput.click());
 
       fileInput.addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (file) {
+          // Show loading when changing image
+          loadingScreen.classList.remove("hidden");
+          img.classList.add("hidden");
+          
           const reader = new FileReader();
           reader.onload = (event) => {
             const imageData = event.target.result;
             img.src = imageData;
             localStorage.setItem(STORAGE_KEY, imageData);
+            
+            // Show image after loading delay
+            setTimeout(() => {
+              loadingScreen.classList.add("hidden");
+              img.classList.remove("hidden");
+            }, 1500);
           };
           reader.readAsDataURL(file);
         }
