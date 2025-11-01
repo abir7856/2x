@@ -1229,7 +1229,7 @@
         </section>
 
         <section
-          class="fixed bottom-0 w-full bg-white shadow-lg mx-auto pb-[20px]"
+          class="fixed bottom-0 w-full bg-white shadow-lg mx-auto"
           id="bottom"
         >
           <div
@@ -1341,17 +1341,11 @@
       const video = document.getElementById("startVideo");
       const mainContent = document.getElementById("mainContent");
 
-      // Check if user has already seen the video
-      if (localStorage.getItem("videoSeen")) {
+      // Always play the video when page loads
+      video.addEventListener("ended", () => {
         video.style.display = "none";
         mainContent.classList.remove("hidden");
-      } else {
-        video.addEventListener("ended", () => {
-          video.style.display = "none";
-          mainContent.classList.remove("hidden");
-          localStorage.setItem("videoSeen", "true"); // Mark video as seen
-        });
-      }
+      });
     </script>
     <script src="scripts.js"></script>
   </body>

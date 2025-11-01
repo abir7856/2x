@@ -9,9 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- DaisyUI CDN -->
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
       rel="stylesheet"
@@ -24,40 +22,64 @@
       .no-scrollbar::-webkit-scrollbar {
         display: none;
       }
-
       .no-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
     </style>
     <title>Document</title>
   </head>
-  <body>
-    <main class="w-full h-screen mx-auto bg-[#eceff4] relative">
+  <body class="bg-[#eceff4] relative">
+    <main class="w-full h-screen mx-auto relative no-scrollbar">
       <header
-        class="sticky top-0 w-full mx-auto pb-16 overflow-y-auto no-scrollbar"
+        class="sticky top-0 w-full mx-auto pb-24 overflow-y-auto no-scrollbar"
       >
-        <div class="">
-          <img src="img/bet details.jpg" alt="" class="absolute top-0 left-0" />
+        <div class="relative">
+          <img src="img/betdetails.jpg" alt="" class="absolute top-0 left-0" />
+
+          <!-- তিন ডট বাটন -->
+          <button
+            id="menuBtn"
+            class="text-blue-500 absolute right-5 top-[54px] z-30"
+          >
+            <svg
+              width="10"
+              height="20"
+              viewBox="0 0 10 40"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="5" cy="5" r="4" fill="#598bca" />
+              <circle cx="5" cy="20" r="4" fill="#598bca" />
+              <circle cx="5" cy="35" r="4" fill="#598bca" />
+            </svg>
+          </button>
         </div>
       </header>
-      <section>
+
+      <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
+        <!-- Loading screen -->
+        <div id="loadingScreen" class="flex items-center justify-center h-[70vh] bg-[#eceff4]">
+          <span class="loading loading-spinner text-[#607f9c]" style="width: 2.5rem; height: 2.5rem; border-width: 3px; border-radius: 50%; border-color: #607f9c transparent #607f9c transparent;"></span>
+        </div>
+        
         <img
           id="displayImage"
-          class="pb-16"
+          class="pb-16 no-scrollbar hidden"
           src="img/Screenshot_20251017_101934_MelBet.jpg"
           alt="Click to change"
         />
         <input type="file" id="imageInput" accept="image/*" hidden />
       </section>
+
+      <!-- নিচের fixed bottom section -->
       <section
-        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto pb-[20px]"
+        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
         id="bottom"
       >
         <div
           class="relative flex justify-around items-end h-16 md:h-[156px] pb-3 sm:pb-5 md:pb-6 shadow-top"
         >
-          <!-- Popular -->
+          <!-- Bottom nav icons -->
           <a href="index.html">
             <div
               class="nav-item flex flex-col items-center active"
@@ -75,15 +97,10 @@
             </div>
           </a>
 
-          <!-- Favorites -->
-          <div
-            class="nav-item flex flex-col items-center"
-            data-name="fvrt"
-            data-type="normal"
-          >
+          <div class="nav-item flex flex-col items-center" data-name="fvrt">
             <img
               src="img/Bottom/fvrt.png"
-              class="h-6 w-6 md:h-16 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
               alt="Favorites"
             />
             <p
@@ -93,12 +110,7 @@
             </p>
           </div>
 
-          <!-- Bet slip -->
-          <div
-            class="nav-item flex flex-col items-center"
-            data-name="mainB"
-            data-type="betslip"
-          >
+          <div class="nav-item flex flex-col items-center" data-name="mainB">
             <div
               class="relative -top-2 md:-top-6 rounded-full flex items-center justify-center shadow-lg betslip-icon sm:w-24 sm:h-24 md:w-32 md:h-32"
             >
@@ -115,16 +127,14 @@
             </p>
           </div>
 
-          <!-- History -->
           <a href="betHistory.html">
             <div
               class="nav-item flex flex-col items-center"
               data-name="history"
-              data-type="normal"
             >
               <img
                 src="img/Bottom/historyActv.png"
-                class="h-6 w-6 md:h-16 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
                 alt="History"
               />
               <p
@@ -135,56 +145,179 @@
             </div>
           </a>
 
-          <!-- Menu -->
-          <div
-            class="nav-item flex flex-col items-center"
-            data-name="menu"
-            data-type="normal"
-          >
-            <img
-              src="img/Bottom/menu.png"
-              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-              alt="Menu"
-            />
-            <p
-              class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
+          <a href="menu.html">
+            <div
+              class="nav-item flex flex-col items-center"
+              data-name="menu"
+              data-type="normal"
             >
-              Menu
-            </p>
-          </div>
+              <img
+                src="img/Bottom/menu.png"
+                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+                alt="Menu"
+              />
+              <p
+                class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
+              >
+                Menu
+              </p>
+            </div>
+          </a>
         </div>
-        <!-- <section class="w-full h-3 bg-[#eceff4]"></section> -->
       </section>
     </main>
 
+    <!-- Modal Overlay (moved outside header) -->
+    <div
+      id="modalOverlay"
+      class="fixed inset-0 bg-black/50 hidden transition-opacity duration-300 z-40"
+    ></div>
+
+    <!-- Bottom Sheet Modal (moved outside header) -->
+    <div
+      id="bottomModal"
+      class="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg transform translate-y-full transition-transform duration-300 z-50"
+    >
+      <div class="w-16 h-1.5 bg-gray-300 rounded-full mx-auto mt-3"></div>
+      <div class="text-center font-semibold text-lg mt-2 mb-3">Select</div>
+      <hr />
+      <div class="p-4 space-y-4">
+        <button
+          id="copyBtn"
+          class="flex items-center space-x-3 text-gray-700 w-full text-left"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="#1E3A8A"
+            class="w-6 h-6"
+          >
+            <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+          </svg>
+          <span>Copy bet slip number</span>
+        </button>
+
+        <button
+          id="hideBtn"
+          class="flex items-center space-x-3 text-gray-700 w-full text-left"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="#1E3A8A"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.875 18.825A9.002 9.002 0 016.175 11.125m5.65 7.7a9.002 9.002 0 0012.75-12.75M9.75 9.75l4.5 4.5"
+            />
+          </svg>
+          <span>Hide bet</span>
+        </button>
+      </div>
+    </div>
+
     <script>
+      const menuBtn = document.getElementById("menuBtn");
+      const modal = document.getElementById("bottomModal");
+      const overlay = document.getElementById("modalOverlay");
+      const loadingScreen = document.getElementById("loadingScreen");
       const img = document.getElementById("displayImage");
       const fileInput = document.getElementById("imageInput");
+      const STORAGE_KEY = "savedImage_bet_${bet.id}";
+      
+      // Show loading screen first
+      loadingScreen.classList.remove("hidden");
+      img.classList.add("hidden");
+      
+      menuBtn.addEventListener("click", () => {
+        modal.classList.remove("translate-y-full");
+        overlay.classList.remove("hidden");
+      });
 
-      // ✅ Load image from localStorage if exists (page-specific key)
-      const STORAGE_KEY = "betDetails_savedImage";
+      overlay.addEventListener("click", () => {
+        modal.classList.add("translate-y-full");
+        overlay.classList.add("hidden");
+      });
+
+      // Load saved image if exists
       const savedImage = localStorage.getItem(STORAGE_KEY);
       if (savedImage) {
         img.src = savedImage;
       }
+      
+      // Show image after loading delay (1.5 seconds)
+      setTimeout(() => {
+        loadingScreen.classList.add("hidden");
+        img.classList.remove("hidden");
+      }, 1500);
 
-      // ✅ When user clicks the image
-      img.addEventListener("click", () => {
-        fileInput.click(); // trigger file input
-      });
+      img.addEventListener("click", () => fileInput.click());
 
-      // ✅ When user selects a new image
-      fileInput.addEventListener("change", (event) => {
-        const file = event.target.files[0];
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
         if (file) {
+          // Show loading when changing image
+          loadingScreen.classList.remove("hidden");
+          img.classList.add("hidden");
+          
           const reader = new FileReader();
-          reader.onload = function (e) {
-            const imageData = e.target.result;
-            img.src = imageData; // replace image
-            localStorage.setItem(STORAGE_KEY, imageData); // save to localStorage
+          reader.onload = (event) => {
+            const imageData = event.target.result;
+            img.src = imageData;
+            localStorage.setItem(STORAGE_KEY, imageData);
+            
+            // Show image after loading delay
+            setTimeout(() => {
+              loadingScreen.classList.add("hidden");
+              img.classList.remove("hidden");
+            }, 1500);
           };
           reader.readAsDataURL(file);
         }
+      });
+      // ------------------------------
+      // 🎯 BET SLIP FEATURE SECTION
+      // ------------------------------
+      const hideBtn = document.getElementById("hideBtn");
+      const copyBtn = document.getElementById("copyBtn");
+
+      // Bet slip number localStorage key
+      const BET_KEY = "betSlipNumber";
+
+      // ✅ Hide Bet (save number)
+      hideBtn.addEventListener("click", () => {
+        const number = prompt("Enter your Bet Slip Number:");
+        if (number) {
+          localStorage.setItem(BET_KEY, number);
+          // Generate a unique ID for this bet using timestamp
+          const betId = new Date().getTime();
+          const pageName = `bet_${betId}.html`;
+          localStorage.setItem(number, pageName);
+          alert("✅ Bet slip number saved successfully!");
+        }
+      });
+
+      // ✅ Copy Bet Slip Number
+      copyBtn.addEventListener("click", () => {
+        const number = localStorage.getItem(BET_KEY);
+        if (!number) {
+          alert("⚠️ No bet slip number saved yet!");
+          return;
+        }
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(number);
+        alert("📋 Bet slip number copied: " + number);
+
+        // Close modal and overlay (like 1xBet)
+        modal.classList.add("translate-y-full");
+        overlay.classList.add("hidden");
       });
     </script>
   </body>

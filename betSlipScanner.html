@@ -93,32 +93,11 @@
           return;
         }
 
-        try {
-          // Try mapping: bet slip number -> bet id
-          const mappedId =
-            localStorage.getItem("betslip_" + betSlipNumber) ||
-            localStorage.getItem("BETSLIP_" + betSlipNumber) ||
-            localStorage.getItem(betSlipNumber); // legacy fallback
-
-          const directBetId = mappedId || betSlipNumber;
-
-          // Verify bet data exists
-          const betDataKey = `bet_${directBetId}`;
-          const betJson = localStorage.getItem(betDataKey);
-
-          if (betJson) {
-            // Redirect to the dedicated details page which reads localStorage
-            window.location.href = `betDetails.html?id=${encodeURIComponent(directBetId)}`;
-            return;
-          }
-
-          // If no bet JSON found, inform the user
-          console.error("No bet found with ID or bet slip number:", betSlipNumber);
-          alert("❌ No bet found. Please check the bet slip number and try again.");
-        } catch (err) {
-          console.error("Error searching for bet:", err);
-          alert("⚠️ Something went wrong while searching. Check console for details.");
-        }
+        // Save the bet slip number to localStorage for reference
+        localStorage.setItem("BET_KEY", betSlipNumber);
+        
+        // Directly redirect to betDetails.html
+        window.location.href = "betDetails.html";
       });
     </script>
   </body>
