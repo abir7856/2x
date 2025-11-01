@@ -522,7 +522,7 @@ function openDetailsPage(bet) {
       <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
         <!-- Loading screen -->
         <div id="loadingScreen" class="flex items-center justify-center h-[70vh] bg-[#eceff4]">
-          <span class="loading loading-spinner text-[#607f9c]" style="width: 3.5rem; height: 3.5rem;"></span>
+          <span class="loading loading-spinner text-[#607f9c]" style="width: 2.5rem; height: 2.5rem; border-width: 3px; border-radius: 50%; border-color: #607f9c transparent #607f9c transparent;"></span>
         </div>
         
         <img
