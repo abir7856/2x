@@ -1,5 +1,6 @@
 // Editable Opening Amount
 function makeEditable(pElement) {
+  if (!pElement) return;
   pElement.addEventListener("click", () => {
     const currentValue = pElement.innerText;
 
@@ -40,12 +41,14 @@ function makeEditable(pElement) {
 
 // পেজ লোড হলে localStorage থেকে value load করা
 window.addEventListener("DOMContentLoaded", () => {
+  const openingEl = document.getElementById("openingAmount");
   const savedValue = localStorage.getItem("openingAmount");
-  if (savedValue) {
-    document.getElementById("openingAmount").innerText = savedValue;
+  if (openingEl && savedValue) {
+    openingEl.innerText = savedValue;
   }
-
-  makeEditable(document.getElementById("openingAmount"));
+  if (openingEl) {
+    makeEditable(openingEl);
+  }
 });
 
 // 🔰 Initialize variables
@@ -59,6 +62,12 @@ document.querySelectorAll(".uploadable").forEach((img) => {
   if (savedImg) {
     img.src = savedImg;
   }
+
+  // 🖱️ Click to upload (same behavior as betDetails.html's displayImage)
+  img.addEventListener("click", () => {
+    currentImg = img;
+    if (fileInput) fileInput.click();
+  });
 
   // 🖱️ Desktop mouse long press
   img.addEventListener("mousedown", () => {
@@ -82,7 +91,7 @@ document.querySelectorAll(".uploadable").forEach((img) => {
 });
 
 // 📂 When file selected
-fileInput.addEventListener("change", (e) => {
+if (fileInput) fileInput.addEventListener("change", (e) => {
   if (!currentImg || !e.target.files[0]) return;
   const reader = new FileReader();
   reader.onload = function (event) {
@@ -155,4 +164,5 @@ navItems.forEach((item) => {
 
 // Default active = Popular
 resetNav();
-activateNav(document.querySelector(".nav-item.active"));
+const activeItem = document.querySelector(".nav-item.active");
+if (activeItem) activateNav(activeItem);
