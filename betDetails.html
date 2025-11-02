@@ -241,11 +241,30 @@
       const loadingScreen = document.getElementById("loadingScreen");
       const img = document.getElementById("displayImage");
       const fileInput = document.getElementById("imageInput");
-      const STORAGE_KEY = "savedImage_bet_${bet.id}";
+      
+      // Get bet data from localStorage (for APK navigation)
+      let currentBet = null;
+      try {
+        const betData = localStorage.getItem('currentBetDetails');
+        if (betData) {
+          currentBet = JSON.parse(betData);
+          // Clear the data after use
+          localStorage.removeItem('currentBetDetails');
+        }
+      } catch (e) {
+        console.log('No bet data found in localStorage');
+      }
+      
+      // Use bet ID for storage key if available, otherwise use default
+      const betId = currentBet ? currentBet.id : 'default';
+      const STORAGE_KEY = `savedImage_bet_${betId}`;
 
       // Show loading screen first
-      loadingScreen.classList.remove("hidden");
-      img.classList.add("hidden");
+      if (loadingScreen) {
+        loadingScreen.classList.remove("hidden");
+        loadingScreen.style.display = "flex";
+      }
+      if (img) img.classList.add("hidden");
 
       menuBtn.addEventListener("click", () => {
         modal.classList.remove("translate-y-full");
@@ -325,7 +344,7 @@
 
         // Copy to clipboard
         navigator.clipboard.writeText(number);
-        // alert("📋 Bet slip number copied: " + number);
+        alert("📋 Bet slip number copied: " + number);
 
         // Close modal and overlay (like 1xBet)
         modal.classList.add("translate-y-full");
