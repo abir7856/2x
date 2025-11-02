@@ -95,33 +95,51 @@
         top: 0;
         left: 0;
         z-index: 9999;
+        -webkit-tap-highlight-color: transparent;
       }
       
-      /* Hide all video controls and loading indicators */
-      #startVideo::-webkit-media-controls {
+      /* Hide all video controls and loading indicators - comprehensive for WebView */
+      video::-webkit-media-controls,
+      video::-webkit-media-controls-overlay-enclosure,
+      video::-webkit-media-controls-enclosure,
+      video::-webkit-media-controls-panel,
+      video::-webkit-media-controls-play-button,
+      video::-webkit-media-controls-start-playback-button,
+      video::-webkit-media-controls-timeline,
+      video::-webkit-media-controls-current-time-display,
+      video::-webkit-media-controls-time-remaining-display,
+      video::-webkit-media-controls-time-control-container,
+      video::-webkit-media-controls-toggle-closed-captions-button,
+      video::-webkit-media-controls-volume-slider,
+      video::-webkit-media-controls-mute-button,
+      video::-webkit-media-controls-fullscreen-button,
+      video::-webkit-media-controls-timeline-container,
+      video::-webkit-media-controls-volume-slider-container,
+      video::-webkit-media-controls-volume-control-container,
+      video::-webkit-media-controls-seek-back-button,
+      video::-webkit-media-controls-seek-forward-button,
+      video::-webkit-media-controls-rewind-button,
+      video::-webkit-media-controls-return-to-realtime-button,
+      video::-webkit-media-controls-toggle-closed-captions-button,
+      video::-webkit-media-controls-closed-captions-container,
+      video::-webkit-media-controls-status-display,
+      video::-webkit-media-controls-overflow-button {
         display: none !important;
-      }
-      
-      #startVideo::-webkit-media-controls-panel {
-        display: none !important;
-      }
-      
-      #startVideo::-webkit-media-controls-start-playback-button {
-        display: none !important;
-      }
-      
-      #startVideo::-webkit-media-controls-play-button {
-        display: none !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
       }
       
       /* Hide video poster completely */
       video[poster] {
         background: black !important;
+        object-fit: contain !important;
       }
       
       /* Ensure no loading spinner or placeholder */
-      video::before {
+      video::before,
+      video::after {
         display: none !important;
+        content: none !important;
       }
       
       /* Hide any loading state */
@@ -133,7 +151,7 @@
   <body>
     <main class="relative">
       <!-- Starting Video -->
-      <video id="startVideo" autoplay muted playsinline preload="auto" style="background: black; visibility: hidden;">
+      <video id="startVideo" autoplay muted playsinline preload="auto" webkit-playsinline="true" x5-playsinline="true" x5-video-player-type="h5" x5-video-player-fullscreen="true" x5-video-orientation="portraint" controlsList="nodownload nofullscreen noremoteplayback" disablePictureInPicture style="background: black; visibility: hidden;">
         <source src="img/startVideo.mp4" type="video/mp4" />
       </video>
 
@@ -1385,9 +1403,27 @@
       const video = document.getElementById("startVideo");
       const mainContent = document.getElementById("mainContent");
 
+      // Force disable controls for WebView
+      video.controls = false;
+      
+      // Prevent default touch actions on video
+      video.addEventListener("touchstart", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+      
+      // Prevent showing controls on click
+      video.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }, true);
+
       // Show video immediately when it can start playing
       video.addEventListener("loadstart", () => {
         video.style.visibility = "visible";
+        video.play().catch(e => console.log("Video autoplay failed:", e));
       });
 
       // Ensure video plays as soon as possible
