@@ -775,7 +775,7 @@ function openDetailsPage(bet) {
 
         // Copy to clipboard
         navigator.clipboard.writeText(number);
-        alert("📋 Bet slip number copied: " + number);
+        // alert("📋 Bet slip number copied: " + number);
 
         // Close modal and overlay (like 1xBet)
         modal.classList.add("translate-y-full");
