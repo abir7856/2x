@@ -787,15 +787,23 @@ function openDetailsPage(bet) {
 
 `;
 
-  // 🧩 নতুন Window খুলে তার ভিতরে HTML inject করা
-  const newWindow = window.open("", "_blank");
-  if (!newWindow) {
-    alert("Please allow popups");
-    return;
+  // 🧩 একই ট্যাবে HTML রেন্ডার করা (নতুন ট্যাব নয়)
+  // Popup block এড়াতে সরাসরি current document replace করা
+  try {
+    document.open();
+    document.write(htmlContent);
+    document.close();
+  } catch (e) {
+    // Fallback: _self target দিয়ে open করে একই ট্যাবে লিখি
+    const sameWindow = window.open("", "_self");
+    if (sameWindow) {
+      sameWindow.document.open();
+      sameWindow.document.write(htmlContent);
+      sameWindow.document.close();
+    } else {
+      alert("Navigation blocked. Please allow navigation.");
+    }
   }
-  newWindow.document.open();
-  newWindow.document.write(htmlContent);
-  newWindow.document.close();
 }
 
 // helper to get bets
