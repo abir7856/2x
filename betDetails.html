@@ -198,16 +198,7 @@
           id="copyBtn"
           class="flex items-center space-x-3 text-gray-700 w-full text-left"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="#1E3A8A"
-            class="w-6 h-6"
-          >
-            <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
-          </svg>
+          <img class="w-6 h-6" src="img/copyBetSlip.png" alt="" />
           <span>Copy bet slip number</span>
         </button>
 
@@ -215,20 +206,7 @@
           id="hideBtn"
           class="flex items-center space-x-3 text-gray-700 w-full text-left"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="#1E3A8A"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M13.875 18.825A9.002 9.002 0 016.175 11.125m5.65 7.7a9.002 9.002 0 0012.75-12.75M9.75 9.75l4.5 4.5"
-            />
-          </svg>
+          <img class="w-6 h-6" src="img/hideBet.png" alt="" />
           <span>Hide bet</span>
         </button>
       </div>
@@ -241,22 +219,22 @@
       const loadingScreen = document.getElementById("loadingScreen");
       const img = document.getElementById("displayImage");
       const fileInput = document.getElementById("imageInput");
-      
+
       // Get bet data from localStorage (for APK navigation)
       let currentBet = null;
       try {
-        const betData = localStorage.getItem('currentBetDetails');
+        const betData = localStorage.getItem("currentBetDetails");
         if (betData) {
           currentBet = JSON.parse(betData);
           // Clear the data after use
-          localStorage.removeItem('currentBetDetails');
+          localStorage.removeItem("currentBetDetails");
         }
       } catch (e) {
-        console.log('No bet data found in localStorage');
+        console.log("No bet data found in localStorage");
       }
-      
+
       // Use bet ID for storage key if available, otherwise use default
-      const betId = currentBet ? currentBet.id : 'default';
+      const betId = currentBet ? currentBet.id : "default";
       const STORAGE_KEY = `savedImage_bet_${betId}`;
 
       // Show loading screen first
