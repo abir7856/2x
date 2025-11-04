@@ -30,32 +30,31 @@
     <title>Document</title>
   </head>
   <body class="bg-[#eceff4] relative">
-    <main class="w-full h-screen mx-auto relative no-scrollbar">
-      <header
-        class="sticky top-0 w-full mx-auto pb-24 overflow-y-auto no-scrollbar"
-      >
-        <div class="relative">
-          <img src="img/betdetails.jpg" alt="" class="absolute top-0 left-0" />
+    <header
+      class="sticky top-0 w-full mx-auto pb-24 overflow-y-auto no-scrollbar"
+    >
+      <div class="relative">
+        <img src="img/betdetails.jpg" alt="" class="absolute top-0 left-0" />
 
-          <!-- তিন ডট বাটন -->
-          <button
-            id="menuBtn"
-            class="text-blue-500 absolute right-5 top-[54px] z-30"
+        <!-- তিন ডট বাটন -->
+        <button
+          id="menuBtn"
+          class="text-blue-500 absolute right-5 top-[54px] z-30"
+        >
+          <svg
+            width="10"
+            height="20"
+            viewBox="0 0 10 40"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              width="10"
-              height="20"
-              viewBox="0 0 10 40"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="5" cy="5" r="4" fill="#598bca" />
-              <circle cx="5" cy="20" r="4" fill="#598bca" />
-              <circle cx="5" cy="35" r="4" fill="#598bca" />
-            </svg>
-          </button>
-        </div>
-      </header>
-
+            <circle cx="5" cy="5" r="4" fill="#598bca" />
+            <circle cx="5" cy="20" r="4" fill="#598bca" />
+            <circle cx="5" cy="35" r="4" fill="#598bca" />
+          </svg>
+        </button>
+      </div>
+    </header>
+    <main class="w-full h-screen mx-auto no-scrollbar">
       <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
         <!-- Loading screen -->
         <div
@@ -84,100 +83,98 @@
       </section>
 
       <!-- নিচের fixed bottom section -->
-      <section
-        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
-        id="bottom"
-      >
-        <div
-          class="relative flex justify-around items-end h-16 md:h-[156px] pb-3 sm:pb-5 md:pb-6 shadow-top"
-        >
-          <!-- Bottom nav icons -->
-          <a href="index.html">
-            <div
-              class="nav-item flex flex-col items-center active"
-              data-name="popular"
-              data-type="normal"
-            >
-              <img
-                src="img/Bottom/popular.png"
-                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-                alt="Popular"
-              />
-              <p class="text-xs md:text-lg font-medium nav-text text-[#5e809b]">
-                Popular
-              </p>
-            </div>
-          </a>
+    </main>
 
-          <div class="nav-item flex flex-col items-center" data-name="fvrt">
+    <section
+      class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
+      id="bottom"
+    >
+      <div
+        class="relative flex justify-around items-end h-16 md:h-[156px] pb-3 sm:pb-5 md:pb-6 shadow-top"
+      >
+        <!-- Bottom nav icons -->
+        <a href="index.html">
+          <div
+            class="nav-item flex flex-col items-center active"
+            data-name="popular"
+            data-type="normal"
+          >
             <img
-              src="img/Bottom/fvrt.png"
+              src="img/Bottom/popular.png"
               class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-              alt="Favorites"
+              alt="Popular"
+            />
+            <p class="text-xs md:text-lg font-medium nav-text text-[#5e809b]">
+              Popular
+            </p>
+          </div>
+        </a>
+
+        <div class="nav-item flex flex-col items-center" data-name="fvrt">
+          <img
+            src="img/Bottom/fvrt.png"
+            class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+            alt="Favorites"
+          />
+          <p
+            class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
+          >
+            Favorites
+          </p>
+        </div>
+
+        <div class="nav-item flex flex-col items-center" data-name="mainB">
+          <div
+            class="relative -top-2 md:-top-6 rounded-full flex items-center justify-center shadow-lg betslip-icon sm:w-24 sm:h-24 md:w-32 md:h-32"
+          >
+            <img
+              src="img/Bottom/mainB.png"
+              class="w-12 h-12 md:w-30 md:h-30"
+              alt="Bet slip"
+            />
+          </div>
+          <p
+            class="text-xs sm:text-xl md:text-3xl font-medium mt-1 sm:mt-2 nav-text text-[#5e809b]"
+          >
+            Bet slip
+          </p>
+        </div>
+
+        <a href="betHistory.html">
+          <div class="nav-item flex flex-col items-center" data-name="history">
+            <img
+              src="img/Bottom/historyActv.png"
+              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+              alt="History"
+            />
+            <p
+              class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#488cd2]"
+            >
+              History
+            </p>
+          </div>
+        </a>
+
+        <a href="menu.html">
+          <div
+            class="nav-item flex flex-col items-center"
+            data-name="menu"
+            data-type="normal"
+          >
+            <img
+              src="img/Bottom/menu.png"
+              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+              alt="Menu"
             />
             <p
               class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
             >
-              Favorites
+              Menu
             </p>
           </div>
-
-          <div class="nav-item flex flex-col items-center" data-name="mainB">
-            <div
-              class="relative -top-2 md:-top-6 rounded-full flex items-center justify-center shadow-lg betslip-icon sm:w-24 sm:h-24 md:w-32 md:h-32"
-            >
-              <img
-                src="img/Bottom/mainB.png"
-                class="w-12 h-12 md:w-30 md:h-30"
-                alt="Bet slip"
-              />
-            </div>
-            <p
-              class="text-xs sm:text-xl md:text-3xl font-medium mt-1 sm:mt-2 nav-text text-[#5e809b]"
-            >
-              Bet slip
-            </p>
-          </div>
-
-          <a href="betHistory.html">
-            <div
-              class="nav-item flex flex-col items-center"
-              data-name="history"
-            >
-              <img
-                src="img/Bottom/historyActv.png"
-                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-                alt="History"
-              />
-              <p
-                class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#488cd2]"
-              >
-                History
-              </p>
-            </div>
-          </a>
-
-          <a href="menu.html">
-            <div
-              class="nav-item flex flex-col items-center"
-              data-name="menu"
-              data-type="normal"
-            >
-              <img
-                src="img/Bottom/menu.png"
-                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-                alt="Menu"
-              />
-              <p
-                class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
-              >
-                Menu
-              </p>
-            </div>
-          </a>
-        </div>
-      </section>
-    </main>
+        </a>
+      </div>
+    </section>
 
     <!-- Modal Overlay (moved outside header) -->
     <div
@@ -219,30 +216,29 @@
       const loadingScreen = document.getElementById("loadingScreen");
       const img = document.getElementById("displayImage");
       const fileInput = document.getElementById("imageInput");
-
-      // Get bet data from localStorage (for APK navigation)
+      // Resolve current bet context from localStorage (set by betHistory.js)
+      const currentBetRaw = localStorage.getItem("currentBetDetails");
       let currentBet = null;
+      let betId = "unknown";
       try {
-        const betData = localStorage.getItem("currentBetDetails");
-        if (betData) {
-          currentBet = JSON.parse(betData);
-          // Clear the data after use
+        if (currentBetRaw) {
+          currentBet = JSON.parse(currentBetRaw);
+          if (currentBet && typeof currentBet.id !== "undefined") {
+            betId = String(currentBet.id);
+          }
+          // Clear after use to avoid stale data
           localStorage.removeItem("currentBetDetails");
         }
       } catch (e) {
-        console.log("No bet data found in localStorage");
+        console.error("Failed to parse currentBetDetails:", e);
       }
 
-      // Use bet ID for storage key if available, otherwise use default
-      const betId = currentBet ? currentBet.id : "default";
+      // Per-bet image storage key
       const STORAGE_KEY = `savedImage_bet_${betId}`;
 
       // Show loading screen first
-      if (loadingScreen) {
-        loadingScreen.classList.remove("hidden");
-        loadingScreen.style.display = "flex";
-      }
-      if (img) img.classList.add("hidden");
+      loadingScreen.classList.remove("hidden");
+      img.classList.add("hidden");
 
       menuBtn.addEventListener("click", () => {
         modal.classList.remove("translate-y-full");
@@ -304,11 +300,11 @@
         const number = prompt("Enter your Bet Slip Number:");
         if (number) {
           localStorage.setItem(BET_KEY, number);
-          // Generate a unique ID for this bet using timestamp
-          const betId = new Date().getTime();
+          alert("✅ Bet slip number saved successfully!");
+
+          // Optionally map slip number to this bet's page for later lookup
           const pageName = `bet_${betId}.html`;
           localStorage.setItem(number, pageName);
-          alert("✅ Bet slip number saved successfully!");
         }
       });
 
@@ -320,9 +316,21 @@
           return;
         }
 
-        // Copy to clipboard
-        navigator.clipboard.writeText(number);
-        alert("📋 Bet slip number copied: " + number);
+        // Copy to clipboard with WebView-friendly fallback
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(number);
+        } else {
+          const tmp = document.createElement("textarea");
+          tmp.value = number;
+          document.body.appendChild(tmp);
+          tmp.select();
+          try {
+            document.execCommand("copy");
+          } catch (err) {
+            console.warn("Clipboard copy fallback failed:", err);
+          }
+          document.body.removeChild(tmp);
+        }
 
         // Close modal and overlay (like 1xBet)
         modal.classList.add("translate-y-full");

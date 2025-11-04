@@ -120,7 +120,7 @@
     </style>
   </head>
   <body class="bg-[#eceff4]">
-    <header class="fixed top-0 w-full bg-[#eceff4] z-50 shadow-md">
+    <header class="sticky top-0 w-full bg-[#eceff4] z-50 shadow-md">
       <h3
         class="absolute top-[45px] left-[57px] text-sm text-[#183350] font-medium"
       >
@@ -193,7 +193,7 @@
       <img class="w-full" src="img/menu/menu_header.jpg" alt="" />
     </header>
 
-    <main class="relative overflow-hidden pb-20">
+    <main class="relative overflow-hidden pb-5">
       <!-- Loading screen -->
       <div
         id="loadingScreen"
@@ -213,13 +213,13 @@
 
       <img
         id="displayImage"
-        class="w-full slide mt-[211px] hidden"
+        class="w-full slide hidden"
         src="img/menu/body.jpg"
         alt="body"
       />
       <img
         id="othersImage"
-        class="w-full slide hidden-img mt-[211px]"
+        class="w-full slide hidden-img"
         src="img/menu/othersBody.jpg"
         alt="othersBody"
       />
@@ -234,7 +234,7 @@
     </main>
 
     <section
-      class="fixed bottom-0 w-full bg-white shadow-lg mx-auto"
+      class="sticky bottom-0 w-full bg-white shadow-lg mx-auto"
       id="bottom"
     >
       <div
