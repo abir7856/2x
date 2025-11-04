@@ -493,8 +493,8 @@ function openDetailsPage(bet) {
     <title>Document</title>
   </head>
   <body class="bg-[#eceff4] relative">
-
-    <header
+    <main class="w-full h-screen mx-auto relative no-scrollbar">
+      <header
         class="sticky top-0 w-full mx-auto pb-24 overflow-y-auto no-scrollbar"
       >
         <div class="relative">
@@ -519,9 +519,6 @@ function openDetailsPage(bet) {
         </div>
       </header>
 
-    <main class="w-full h-screen mx-auto no-scrollbar">
-      
-
       <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
         <!-- Loading screen -->
         <div id="loadingScreen" class="flex items-center justify-center h-[70vh] bg-[#eceff4]">
@@ -538,10 +535,7 @@ function openDetailsPage(bet) {
       </section>
 
       <!-- নিচের fixed bottom section -->
-      
-    </main>
-
-    <section
+      <section
         class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
         id="bottom"
       >
@@ -634,6 +628,7 @@ function openDetailsPage(bet) {
           </a>
         </div>
       </section>
+    </main>
 
     <!-- Modal Overlay (moved outside header) -->
     <div

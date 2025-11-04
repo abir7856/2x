@@ -30,31 +30,32 @@
     <title>Document</title>
   </head>
   <body class="bg-[#eceff4] relative">
-    <header
-      class="sticky top-0 w-full mx-auto pb-24 overflow-y-auto no-scrollbar"
-    >
-      <div class="relative">
-        <img src="img/betdetails.jpg" alt="" class="absolute top-0 left-0" />
+    <main class="w-full h-screen mx-auto relative no-scrollbar">
+      <header
+        class="sticky top-0 w-full mx-auto pb-24 overflow-y-auto no-scrollbar"
+      >
+        <div class="relative">
+          <img src="img/betdetails.jpg" alt="" class="absolute top-0 left-0" />
 
-        <!-- তিন ডট বাটন -->
-        <button
-          id="menuBtn"
-          class="text-blue-500 absolute right-5 top-[54px] z-30"
-        >
-          <svg
-            width="10"
-            height="20"
-            viewBox="0 0 10 40"
-            xmlns="http://www.w3.org/2000/svg"
+          <!-- তিন ডট বাটন -->
+          <button
+            id="menuBtn"
+            class="text-blue-500 absolute right-5 top-[54px] z-30"
           >
-            <circle cx="5" cy="5" r="4" fill="#598bca" />
-            <circle cx="5" cy="20" r="4" fill="#598bca" />
-            <circle cx="5" cy="35" r="4" fill="#598bca" />
-          </svg>
-        </button>
-      </div>
-    </header>
-    <main class="w-full h-screen mx-auto no-scrollbar">
+            <svg
+              width="10"
+              height="20"
+              viewBox="0 0 10 40"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="5" cy="5" r="4" fill="#598bca" />
+              <circle cx="5" cy="20" r="4" fill="#598bca" />
+              <circle cx="5" cy="35" r="4" fill="#598bca" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
       <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
         <!-- Loading screen -->
         <div
@@ -83,98 +84,100 @@
       </section>
 
       <!-- নিচের fixed bottom section -->
-    </main>
-
-    <section
-      class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
-      id="bottom"
-    >
-      <div
-        class="relative flex justify-around items-end h-16 md:h-[156px] pb-3 sm:pb-5 md:pb-6 shadow-top"
+      <section
+        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
+        id="bottom"
       >
-        <!-- Bottom nav icons -->
-        <a href="index.html">
-          <div
-            class="nav-item flex flex-col items-center active"
-            data-name="popular"
-            data-type="normal"
-          >
-            <img
-              src="img/Bottom/popular.png"
-              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-              alt="Popular"
-            />
-            <p class="text-xs md:text-lg font-medium nav-text text-[#5e809b]">
-              Popular
-            </p>
-          </div>
-        </a>
-
-        <div class="nav-item flex flex-col items-center" data-name="fvrt">
-          <img
-            src="img/Bottom/fvrt.png"
-            class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-            alt="Favorites"
-          />
-          <p
-            class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
-          >
-            Favorites
-          </p>
-        </div>
-
-        <div class="nav-item flex flex-col items-center" data-name="mainB">
-          <div
-            class="relative -top-2 md:-top-6 rounded-full flex items-center justify-center shadow-lg betslip-icon sm:w-24 sm:h-24 md:w-32 md:h-32"
-          >
-            <img
-              src="img/Bottom/mainB.png"
-              class="w-12 h-12 md:w-30 md:h-30"
-              alt="Bet slip"
-            />
-          </div>
-          <p
-            class="text-xs sm:text-xl md:text-3xl font-medium mt-1 sm:mt-2 nav-text text-[#5e809b]"
-          >
-            Bet slip
-          </p>
-        </div>
-
-        <a href="betHistory.html">
-          <div class="nav-item flex flex-col items-center" data-name="history">
-            <img
-              src="img/Bottom/historyActv.png"
-              class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-              alt="History"
-            />
-            <p
-              class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#488cd2]"
+        <div
+          class="relative flex justify-around items-end h-16 md:h-[156px] pb-3 sm:pb-5 md:pb-6 shadow-top"
+        >
+          <!-- Bottom nav icons -->
+          <a href="index.html">
+            <div
+              class="nav-item flex flex-col items-center active"
+              data-name="popular"
+              data-type="normal"
             >
-              History
-            </p>
-          </div>
-        </a>
+              <img
+                src="img/Bottom/popular.png"
+                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+                alt="Popular"
+              />
+              <p class="text-xs md:text-lg font-medium nav-text text-[#5e809b]">
+                Popular
+              </p>
+            </div>
+          </a>
 
-        <a href="menu.html">
-          <div
-            class="nav-item flex flex-col items-center"
-            data-name="menu"
-            data-type="normal"
-          >
+          <div class="nav-item flex flex-col items-center" data-name="fvrt">
             <img
-              src="img/Bottom/menu.png"
+              src="img/Bottom/fvrt.png"
               class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
-              alt="Menu"
+              alt="Favorites"
             />
             <p
               class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
             >
-              Menu
+              Favorites
             </p>
           </div>
-        </a>
-      </div>
-    </section>
+
+          <div class="nav-item flex flex-col items-center" data-name="mainB">
+            <div
+              class="relative -top-2 md:-top-6 rounded-full flex items-center justify-center shadow-lg betslip-icon sm:w-24 sm:h-24 md:w-32 md:h-32"
+            >
+              <img
+                src="img/Bottom/mainB.png"
+                class="w-12 h-12 md:w-30 md:h-30"
+                alt="Bet slip"
+              />
+            </div>
+            <p
+              class="text-xs sm:text-xl md:text-3xl font-medium mt-1 sm:mt-2 nav-text text-[#5e809b]"
+            >
+              Bet slip
+            </p>
+          </div>
+
+          <a href="betHistory.html">
+            <div
+              class="nav-item flex flex-col items-center"
+              data-name="history"
+            >
+              <img
+                src="img/Bottom/historyActv.png"
+                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+                alt="History"
+              />
+              <p
+                class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#488cd2]"
+              >
+                History
+              </p>
+            </div>
+          </a>
+
+          <a href="menu.html">
+            <div
+              class="nav-item flex flex-col items-center"
+              data-name="menu"
+              data-type="normal"
+            >
+              <img
+                src="img/Bottom/menu.png"
+                class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
+                alt="Menu"
+              />
+              <p
+                class="text-xs sm:text-xl md:text-3xl font-medium nav-text text-[#5e809b]"
+              >
+                Menu
+              </p>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
 
     <!-- Modal Overlay (moved outside header) -->
     <div
