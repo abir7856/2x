@@ -641,10 +641,10 @@ function openDetailsPage(bet) {
       id="bottomModal"
       class="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg transform translate-y-full transition-transform duration-300 z-50"
     >
-      <div class="w-16 h-1.5 bg-gray-300 rounded-full mx-auto mt-3"></div>
+      <div class="w-8 h-1.5 bg-gray-300 rounded-full mx-auto mt-3"></div>
       <div class="text-center font-semibold text-lg mt-2 mb-3">Select</div>
-      <hr />
-      <div class="p-4 space-y-4">
+
+      <div class="p-4 space-y-4 pb-9">
         <button
           id="copyBtn"
           class="flex items-center space-x-3 text-gray-700 w-full text-left"
@@ -652,7 +652,7 @@ function openDetailsPage(bet) {
           <img class="w-6 h-6" src="img/copyBetSlip.png" alt="" />
           <span>Copy bet slip number</span>
         </button>
-
+        <hr />
         <button
           id="hideBtn"
           class="flex items-center space-x-3 text-gray-700 w-full text-left"
