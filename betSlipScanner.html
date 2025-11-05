@@ -17,7 +17,7 @@
     <!-- Main Content -->
     <div class="bg-white w-11/12 rounded-xl shadow-md p-5 absolute top-40">
       <div class="relative mt-2">
-        <p id="infoText" class="text-[#607f9c] text-sm font-medium mb-4">
+        <p id="infoText" class="text-[#607f9c] text-sm font-medium mb-3">
           Enter or scan your bet slip code to get all the bet details
         </p>
 
@@ -25,14 +25,15 @@
           <label
             for="betSlip"
             id="betLabel"
-            class="absolute left-0 top-2 text-[#607f9c] text-sm transition-all duration-200 pointer-events-none"
+            class="absolute left-0 top-2 text-[#607f9c] text-sm transition-all duration-200 pointer-events-none hidden"
           >
             Bet slip number
           </label>
           <input
             id="betSlip"
             type="text"
-            class="w-full border-b-[2px] border-gray-300 bg-transparent pt-5 pb-2 text-gray-800 focus:outline-none focus:border-[#498cd2]"
+            class="w-full border-b-[2px] border-gray-300 bg-transparent pt-7 pb-1 text-gray-800 focus:outline-none focus:border-[#498cd2] placeholder:text-[#607f9c]"
+            placeholder="Bet slip number"
           />
         </div>
       </div>
@@ -95,9 +96,23 @@
 
         // Save the bet slip number to localStorage for reference
         localStorage.setItem("BET_KEY", betSlipNumber);
-        
+
         // Directly redirect to betDetails.html
         window.location.href = "betDetails.html";
+      });
+      const betSlipInput = document.getElementById("betSlip");
+      const betLabel = document.getElementById("betLabel");
+
+      betSlipInput.addEventListener("focus", () => {
+        betLabel.classList.remove("hidden");
+        betSlipInput.placeholder = "";
+      });
+
+      betSlipInput.addEventListener("blur", () => {
+        if (betSlipInput.value === "") {
+          betLabel.classList.add("hidden");
+          betSlipInput.placeholder = "Bet slip number";
+        }
       });
     </script>
   </body>

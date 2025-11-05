@@ -30,12 +30,12 @@
     <title>Document</title>
   </head>
   <body class="bg-[#eceff4] relative">
-    <main class="w-full min-h-screen mx-auto relative no-scrollbar">
+    <main class="w-full h-screen mx-auto relative no-scrollbar">
       <header
-        class="fixed top-0 left-0 w-full z-40"
+        class="sticky top-0 w-full mx-auto pb-24 overflow-y-auto no-scrollbar"
       >
-        <div class="relative h-20 sm:h-28 md:h-[200px]">
-          <img src="img/betdetails.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="relative">
+          <img src="img/betdetails.jpg" alt="" class="absolute top-0 left-0" />
 
           <!-- তিন ডট বাটন -->
           <button
@@ -56,7 +56,7 @@
         </div>
       </header>
 
-      <section class="no-scrollbar overflow-x-hidden bg-[#eceff4] pt-20 sm:pt-28 md:pt-[200px] pb-20 md:pb-[180px]">
+      <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
         <!-- Loading screen -->
         <div
           id="loadingScreen"
@@ -85,7 +85,7 @@
 
       <!-- নিচের fixed bottom section -->
       <section
-        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-50"
+        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
         id="bottom"
       >
         <div
@@ -198,7 +198,16 @@
           id="copyBtn"
           class="flex items-center space-x-3 text-gray-700 w-full text-left"
         >
-          <img class="w-6 h-6" src="img/copyBetSlip.png" alt="" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="#1E3A8A"
+            class="w-6 h-6"
+          >
+            <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+          </svg>
           <span>Copy bet slip number</span>
         </button>
 
@@ -206,7 +215,20 @@
           id="hideBtn"
           class="flex items-center space-x-3 text-gray-700 w-full text-left"
         >
-          <img class="w-6 h-6" src="img/hideBet.png" alt="" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="#1E3A8A"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.875 18.825A9.002 9.002 0 016.175 11.125m5.65 7.7a9.002 9.002 0 0012.75-12.75M9.75 9.75l4.5 4.5"
+            />
+          </svg>
           <span>Hide bet</span>
         </button>
       </div>
@@ -219,25 +241,7 @@
       const loadingScreen = document.getElementById("loadingScreen");
       const img = document.getElementById("displayImage");
       const fileInput = document.getElementById("imageInput");
-      // Resolve current bet context from localStorage (set by betHistory.js)
-      const currentBetRaw = localStorage.getItem("currentBetDetails");
-      let currentBet = null;
-      let betId = "unknown";
-      try {
-        if (currentBetRaw) {
-          currentBet = JSON.parse(currentBetRaw);
-          if (currentBet && typeof currentBet.id !== "undefined") {
-            betId = String(currentBet.id);
-          }
-          // Clear after use to avoid stale data
-          localStorage.removeItem("currentBetDetails");
-        }
-      } catch (e) {
-        console.error("Failed to parse currentBetDetails:", e);
-      }
-
-      // Per-bet image storage key
-      const STORAGE_KEY = `savedImage_bet_${betId}`;
+      const STORAGE_KEY = "savedImage_bet_${bet.id}";
 
       // Show loading screen first
       loadingScreen.classList.remove("hidden");
@@ -303,11 +307,11 @@
         const number = prompt("Enter your Bet Slip Number:");
         if (number) {
           localStorage.setItem(BET_KEY, number);
-          alert("✅ Bet slip number saved successfully!");
-
-          // Optionally map slip number to this bet's page for later lookup
+          // Generate a unique ID for this bet using timestamp
+          const betId = new Date().getTime();
           const pageName = `bet_${betId}.html`;
           localStorage.setItem(number, pageName);
+          alert("✅ Bet slip number saved successfully!");
         }
       });
 
@@ -319,21 +323,9 @@
           return;
         }
 
-        // Copy to clipboard with WebView-friendly fallback
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(number);
-        } else {
-          const tmp = document.createElement("textarea");
-          tmp.value = number;
-          document.body.appendChild(tmp);
-          tmp.select();
-          try {
-            document.execCommand("copy");
-          } catch (err) {
-            console.warn("Clipboard copy fallback failed:", err);
-          }
-          document.body.removeChild(tmp);
-        }
+        // Copy to clipboard
+        navigator.clipboard.writeText(number);
+        // alert("📋 Bet slip number copied: " + number);
 
         // Close modal and overlay (like 1xBet)
         modal.classList.add("translate-y-full");

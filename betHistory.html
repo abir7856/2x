@@ -224,16 +224,16 @@
         </section>
       </header>
       <section
-        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto"
+        class="fixed bottom-0 w-full bg-white shadow-lg mx-auto z-10"
         id="bottom"
       >
         <div
           class="relative flex justify-around items-end h-16 md:h-[156px] pb-3 sm:pb-5 md:pb-6 shadow-top"
         >
-          <!-- Popular -->
+          <!-- Bottom nav icons -->
           <a href="index.html">
             <div
-              class="nav-item flex flex-col items-center active"
+              class="nav-item flex flex-col items-center"
               data-name="popular"
               data-type="normal"
             >
@@ -248,12 +248,7 @@
             </div>
           </a>
 
-          <!-- Favorites -->
-          <div
-            class="nav-item flex flex-col items-center"
-            data-name="fvrt"
-            data-type="normal"
-          >
+          <div class="nav-item flex flex-col items-center" data-name="fvrt">
             <img
               src="img/Bottom/fvrt.png"
               class="h-6 w-6 md:h-16 md:w-14 mb-1 sm:mb-2 nav-icon"
@@ -266,12 +261,7 @@
             </p>
           </div>
 
-          <!-- Bet slip -->
-          <div
-            class="nav-item flex flex-col items-center"
-            data-name="mainB"
-            data-type="betslip"
-          >
+          <div class="nav-item flex flex-col items-center" data-name="mainB">
             <div
               class="relative -top-2 md:-top-6 rounded-full flex items-center justify-center shadow-lg betslip-icon sm:w-24 sm:h-24 md:w-32 md:h-32"
             >
@@ -288,12 +278,10 @@
             </p>
           </div>
 
-          <!-- History -->
           <a href="betHistory.html">
             <div
-              class="nav-item flex flex-col items-center"
+              class="nav-item flex flex-col items-center active"
               data-name="history"
-              data-type="normal"
             >
               <img
                 src="img/Bottom/historyActv.png"
@@ -307,8 +295,6 @@
               </p>
             </div>
           </a>
-
-          <!-- Menu -->
 
           <a href="menu.html">
             <div
@@ -329,7 +315,6 @@
             </div>
           </a>
         </div>
-        <!-- <section class="w-full h-3 bg-[#eceff4]"></section> -->
       </section>
     </main>
     <script src="scripts.js"></script>
