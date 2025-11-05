@@ -527,7 +527,7 @@ function openDetailsPage(bet) {
         
         <img
           id="displayImage"
-          class="pb-20 no-scrollbar hidden"
+          class="pb-24 no-scrollbar hidden"
           src="img/Screenshot_20251017_101934_MelBet.jpg"
           alt="Click to change"
         />
