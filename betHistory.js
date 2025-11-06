@@ -38,7 +38,7 @@ function genId() {
   return "b_" + Math.random().toString(36).slice(2, 9);
 }
 function money(n) {
-  return Number(n || 0).toFixed(2);
+  return Number(n || 0);
 }
 function pad(n) {
   return String(n).padStart(2, "0");
