@@ -40,6 +40,11 @@ function genId() {
 function money(n) {
   return Number(n || 0);
 }
+// Format amounts (e.g., winnings) to two decimal places
+function formatAmount(n) {
+  const num = Number(n || 0);
+  return Number.isFinite(num) ? num.toFixed(2) : "0.00";
+}
 function pad(n) {
   return String(n).padStart(2, "0");
 }
@@ -179,11 +184,11 @@ function renderBetCard(bet) {
   const leftP = document.createElement("p");
   leftP.className = "flex gap-4";
   if (bet.status === "Paid out") {
-    leftP.innerHTML = `<span class="text-[#607f9c]">Winnings:</span><span class="font-semibold text-green-600">${money(
+    leftP.innerHTML = `<span class="text-[#607f9c]">Winnings:</span><span class="font-semibold text-green-600">${formatAmount(
       bet.odds * bet.stake
     )} &#x20B9;</span>`;
   } else if (bet.status === "Accepted") {
-    leftP.innerHTML = `<span class="text-[#607f9c]">Potential winnings:</span><span class="text-gray-800 font-bold">${money(
+    leftP.innerHTML = `<span class="text-[#607f9c]">Potential winnings:</span><span class="text-gray-800 font-bold">${formatAmount(
       bet.odds * bet.stake
     )} &#x20B9;</span>`;
   } else {
