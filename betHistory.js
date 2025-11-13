@@ -183,16 +183,94 @@ function renderBetCard(bet) {
   row3.className = "flex justify-between items-center";
   const leftP = document.createElement("p");
   leftP.className = "flex gap-4";
-  if (bet.status === "Paid out") {
-    leftP.innerHTML = `<span class="text-[#607f9c]">Winnings:</span><span class="font-semibold text-green-600">${formatAmount(
-      bet.odds * bet.stake
-    )} &#x20B9;</span>`;
+  const isPaid = bet.status === "Paid out";
+  if (isPaid) {
+    const displayAmt =
+      bet.winningsOverride != null ? Number(bet.winningsOverride) : bet.odds * bet.stake;
+    leftP.innerHTML = `<span class="text-[#607f9c]">Winnings:</span><span class="font-semibold text-green-600 winnings-amount" data-kind="winnings">${formatAmount(
+      displayAmt
+    )} ₹</span>`;
   } else if (bet.status === "Accepted") {
-    leftP.innerHTML = `<span class="text-[#607f9c]">Potential winnings:</span><span class="text-gray-800 font-bold">${formatAmount(
-      bet.odds * bet.stake
-    )} &#x20B9;</span>`;
+    const displayAmt =
+      bet.potentialOverride != null ? Number(bet.potentialOverride) : bet.odds * bet.stake;
+    leftP.innerHTML = `<span class="text-[#607f9c]">Potential winnings:</span><span class="text-gray-800 font-bold potential-amount" data-kind="potential">${formatAmount(
+      displayAmt
+    )} ₹</span>`;
   } else {
     leftP.innerHTML = `<span class="text-[#607f9c]">Status:</span>`;
+  }
+
+  // Make winnings amount editable on click and persist override per bet
+  const amountEl = leftP.querySelector(".winnings-amount, .potential-amount");
+  if (amountEl) {
+    amountEl.style.cursor = "pointer";
+    amountEl.title = "Click to edit";
+
+    const attachEdit = (span) => {
+      span.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const currentText = span.textContent.replace("₹", "").trim();
+        const input = document.createElement("input");
+        input.type = "number";
+        input.step = "0.01";
+        input.value = currentText.replace(/[^\d.\-]/g, "");
+        input.style.width = "110px";
+        input.className = "font-semibold text-gray-800 border border-gray-300 rounded px-1";
+
+        span.replaceWith(input);
+        input.focus();
+
+        const commit = () => {
+          const raw = (input.value || "0").trim();
+          const num = Number(raw);
+          const newSpan = document.createElement("span");
+          const isPaidLocal = isPaid;
+          if (isPaidLocal) {
+            newSpan.className = "font-semibold text-green-600 winnings-amount";
+          } else {
+            newSpan.className = "text-gray-800 font-bold potential-amount";
+          }
+
+          if (Number.isFinite(num)) {
+            // Persist override in localStorage
+            const all = loadBets();
+            const idx = all.findIndex((x) => x.id === bet.id);
+            if (idx !== -1) {
+              if (isPaidLocal) {
+                all[idx].winningsOverride = num;
+              } else {
+                all[idx].potentialOverride = num;
+              }
+              saveBets(all);
+            }
+            newSpan.textContent = `${formatAmount(num)} ₹`;
+          } else {
+            // Revert to original display if invalid
+            const fallback = isPaidLocal
+              ? bet.winningsOverride != null
+                ? Number(bet.winningsOverride)
+                : bet.odds * bet.stake
+              : bet.potentialOverride != null
+              ? Number(bet.potentialOverride)
+              : bet.odds * bet.stake;
+            newSpan.textContent = `${formatAmount(fallback)} ₹`;
+          }
+
+          input.replaceWith(newSpan);
+          // Re-attach edit capability
+          newSpan.style.cursor = "pointer";
+          newSpan.title = "Click to edit";
+          attachEdit(newSpan);
+        };
+
+        input.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter") commit();
+        });
+        input.addEventListener("blur", commit);
+      });
+    };
+
+    attachEdit(amountEl);
   }
 
   const rightDiv = document.createElement("div");
