@@ -186,13 +186,17 @@ function renderBetCard(bet) {
   const isPaid = bet.status === "Paid out";
   if (isPaid) {
     const displayAmt =
-      bet.winningsOverride != null ? Number(bet.winningsOverride) : bet.odds * bet.stake;
+      bet.winningsOverride != null
+        ? Number(bet.winningsOverride)
+        : bet.odds * bet.stake;
     leftP.innerHTML = `<span class="text-[#607f9c]">Winnings:</span><span class="font-semibold text-green-600 winnings-amount" data-kind="winnings">${formatAmount(
       displayAmt
     )} ₹</span>`;
   } else if (bet.status === "Accepted") {
     const displayAmt =
-      bet.potentialOverride != null ? Number(bet.potentialOverride) : bet.odds * bet.stake;
+      bet.potentialOverride != null
+        ? Number(bet.potentialOverride)
+        : bet.odds * bet.stake;
     leftP.innerHTML = `<span class="text-[#607f9c]">Potential winnings:</span><span class="text-gray-800 font-bold potential-amount" data-kind="potential">${formatAmount(
       displayAmt
     )} ₹</span>`;
@@ -215,7 +219,8 @@ function renderBetCard(bet) {
         input.step = "0.01";
         input.value = currentText.replace(/[^\d.\-]/g, "");
         input.style.width = "110px";
-        input.className = "font-semibold text-gray-800 border border-gray-300 rounded px-1";
+        input.className =
+          "font-semibold text-gray-800 border border-gray-300 rounded px-1";
 
         span.replaceWith(input);
         input.focus();
@@ -604,10 +609,22 @@ function openDetailsPage(bet) {
 
       <section class="no-scrollbar overflow-hidden bg-[#eceff4]">
         <!-- Loading screen -->
-        <div id="loadingScreen" class="flex items-center justify-center h-[70vh] bg-[#eceff4]">
-          <span class="loading loading-spinner text-[#607f9c]" style="width: 2.5rem; height: 2.5rem; border-width: 3px; border-radius: 50%; border-color: #607f9c transparent #607f9c transparent;"></span>
+        <div
+          id="loadingScreen"
+          class="flex items-center justify-center h-[70vh] bg-[#eceff4]"
+        >
+          <span
+            class="loading loading-spinner text-[#607f9c]"
+            style="
+              width: 2.5rem;
+              height: 2.5rem;
+              border-width: 3px;
+              border-radius: 50%;
+              border-color: #607f9c transparent #607f9c transparent;
+            "
+          ></span>
         </div>
-        
+
         <img
           id="displayImage"
           class="pb-24 no-scrollbar hidden"
@@ -725,7 +742,9 @@ function openDetailsPage(bet) {
       class="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-lg transform translate-y-full transition-transform duration-300 z-50"
     >
       <div class="w-8 h-1.5 bg-gray-300 rounded-full mx-auto mt-3"></div>
-      <div class="text-center font-semibold text-lg mt-2 mb-3 text-[#11315a]">Select</div>
+      <div class="text-center font-semibold text-lg mt-2 mb-3 text-[#11315a]">
+        Select
+      </div>
 
       <div class="p-4 space-y-4 pb-9">
         <button
@@ -754,11 +773,11 @@ function openDetailsPage(bet) {
       const img = document.getElementById("displayImage");
       const fileInput = document.getElementById("imageInput");
       const STORAGE_KEY = "savedImage_bet_${bet.id}";
-      
+
       // Show loading screen first
       loadingScreen.classList.remove("hidden");
       img.classList.add("hidden");
-      
+
       menuBtn.addEventListener("click", () => {
         modal.classList.remove("translate-y-full");
         overlay.classList.remove("hidden");
@@ -774,7 +793,7 @@ function openDetailsPage(bet) {
       if (savedImage) {
         img.src = savedImage;
       }
-      
+
       // Show image after loading delay (1.5 seconds)
       setTimeout(() => {
         loadingScreen.classList.add("hidden");
@@ -789,13 +808,13 @@ function openDetailsPage(bet) {
           // Show loading when changing image
           loadingScreen.classList.remove("hidden");
           img.classList.add("hidden");
-          
+
           const reader = new FileReader();
           reader.onload = (event) => {
             const imageData = event.target.result;
             img.src = imageData;
             localStorage.setItem(STORAGE_KEY, imageData);
-            
+
             // Show image after loading delay
             setTimeout(() => {
               loadingScreen.classList.add("hidden");
@@ -819,11 +838,12 @@ function openDetailsPage(bet) {
         const number = prompt("Enter your Bet Slip Number:");
         if (number) {
           localStorage.setItem(BET_KEY, number);
+          // Generate a unique ID for this bet using timestamp
+          const betId = new Date().getTime();
+          const pageName = "bet_" + betId + ".html";
+          localStorage.setItem(number, pageName);
           alert("✅ Bet slip number saved successfully!");
         }
-          const pageName = \`bet_\${id}.html\`;
-          localStorage.setItem(number, pageName);
-          
       });
 
       // ✅ Copy Bet Slip Number
@@ -845,6 +865,7 @@ function openDetailsPage(bet) {
     </script>
   </body>
 </html>
+
 
 `;
 
