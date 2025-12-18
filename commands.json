@@ -46,5 +46,11 @@
     "loginId": "ID-CEGDZ5",
     "action": "approve",
     "at": "2025-12-18T08:38:52.559Z"
+  },
+  {
+    "id": "cmd-1766047236638",
+    "loginId": "ID-CEGDZ5",
+    "action": "reject",
+    "at": "2025-12-18T08:40:36.638Z"
   }
 ]
