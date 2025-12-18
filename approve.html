@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Approval</title>
+    <style> body { font-family: "Roboto", sans-serif; } </style>
+    <script>
+      const SECRET = "ALEX-SECRET-314"; // simple shared secret
+
+      function verify(id, sig) {
+        try {
+          const decoded = atob(sig);
+          return decoded === `${id}|${SECRET}`;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function qs(name) {
+        const p = new URLSearchParams(location.search);
+        return p.get(name);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const id = qs("id");
+        const sig = qs("sig");
+        const reject = qs("reject");
+        const statusEl = document.getElementById("status");
+        const detailsEl = document.getElementById("details");
+
+        if (reject === "1") {
+          localStorage.setItem("approved", "no");
+          statusEl.textContent = "Access Rejected";
+          detailsEl.textContent = "Please contact admin for more details.";
+          return;
+        }
+
+        if (!id || !sig) {
+          statusEl.textContent = "Invalid approval link";
+          detailsEl.textContent = "Missing parameters.";
+          return;
+        }
+
+        const savedId = localStorage.getItem("loginId");
+        if (!savedId) {
+          statusEl.textContent = "No login found";
+          detailsEl.textContent = "Please login first.";
+          return;
+        }
+
+        if (savedId !== id) {
+          statusEl.textContent = "ID mismatch";
+          detailsEl.textContent = `This device has ID ${savedId}, link is for ${id}.`;
+          return;
+        }
+
+        if (!verify(id, sig)) {
+          statusEl.textContent = "Invalid signature";
+          detailsEl.textContent = "Approval link could not be verified.";
+          return;
+        }
+
+        localStorage.setItem("approved", "yes");
+        localStorage.setItem("approvedAt", new Date().toISOString());
+        statusEl.textContent = "Approval Successful";
+        detailsEl.innerHTML = `ID <strong>${id}</strong> has been approved. You can open the app now.`;
+        const btn = document.getElementById("openApp");
+        btn.classList.remove("hidden");
+        btn.addEventListener("click", () => location.href = "index.html");
+      });
+    </script>
+  </head>
+  <body class="bg-[#eceff4]">
+    <main class="max-w-sm mx-auto mt-12 bg-white shadow-md rounded-xl p-6 text-center">
+      <h2 id="status" class="text-xl font-semibold text-[#183350]">Approving…</h2>
+      <p id="details" class="mt-3 text-sm text-[#5e809b]"></p>
+      <button id="openApp" class="hidden mt-6 w-full bg-[#488cd2] text-white py-2 rounded-md">Open App</button>
+    </main>
+  </body>
+</html>

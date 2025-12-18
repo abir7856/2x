@@ -51,6 +51,20 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// --- Auth helpers ---
+function ensureApproved() {
+  const path = (location.pathname.split("/").pop() || "").toLowerCase();
+  const isAuthPage = ["login.html", "approve.html", "admin.html"].includes(path);
+  if (isAuthPage) return;
+  const approved = localStorage.getItem("approved");
+  if (approved !== "yes") {
+    location.replace("login.html");
+  }
+}
+
+// Call on load where scripts.js is included
+try { ensureApproved(); } catch (e) {}
+
 // 🔰 Initialize variables
 const fileInput = document.getElementById("fileInput");
 let currentImg = null;
