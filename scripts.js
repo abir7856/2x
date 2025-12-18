@@ -65,6 +65,48 @@ function ensureApproved() {
 // Call on load where scripts.js is included
 try { ensureApproved(); } catch (e) {}
 
+// --- Global logout watcher (poll commands.json) ---
+function getRepoInfo() {
+  const host = location.hostname; // username.github.io
+  const owner = host.split(".")[0];
+  const pathParts = location.pathname.split("/").filter(Boolean);
+  const repo = pathParts.length > 0 ? pathParts[0] : `${owner}.github.io`;
+  const branch = localStorage.getItem("ghBranch") || "main";
+  return { owner, repo, branch };
+}
+
+async function pollLogout(loginId, onLogout) {
+  const { owner, repo, branch } = getRepoInfo();
+  const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/commands.json?_=${Date.now()}`;
+  try {
+    const res = await fetch(rawUrl, { cache: "no-store" });
+    if (!res.ok) return;
+    const list = await res.json();
+    if (!Array.isArray(list)) return;
+    const cmds = list.filter((c) => c && c.loginId === loginId);
+    if (cmds.length === 0) return;
+    const last = cmds[cmds.length - 1];
+    if (last.action === "logout") onLogout?.();
+  } catch {}
+}
+
+function startLogoutWatcher() {
+  const approved = localStorage.getItem("approved");
+  const loginId = localStorage.getItem("loginId");
+  if (approved !== "yes" || !loginId) return;
+  setInterval(() => {
+    pollLogout(loginId, () => {
+      // Clear local state and return to login
+      localStorage.removeItem("approved");
+      localStorage.removeItem("loginId");
+      localStorage.removeItem("deviceInfo");
+      location.replace("login.html");
+    });
+  }, 8000);
+}
+
+try { startLogoutWatcher(); } catch (e) {}
+
 // 🔰 Initialize variables
 const fileInput = document.getElementById("fileInput");
 let currentImg = null;

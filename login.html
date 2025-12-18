@@ -15,6 +15,48 @@
       body { font-family: "Roboto", sans-serif; }
     </style>
     <script>
+      function getRepoInfo() {
+        const host = location.hostname; // username.github.io
+        const owner = host.split(".")[0];
+        const pathParts = location.pathname.split("/").filter(Boolean);
+        const repo = pathParts.length > 0 ? pathParts[0] : `${owner}.github.io`;
+        const branch = localStorage.getItem("ghBranch") || "main";
+        return { owner, repo, branch };
+      }
+
+      async function pollAdminCommands(loginId, onDecision) {
+        const { owner, repo, branch } = getRepoInfo();
+        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/commands.json?_=${Date.now()}`;
+        try {
+          const res = await fetch(rawUrl, { cache: "no-store" });
+          if (!res.ok) return; // silently ignore while file not present
+          const list = await res.json();
+          if (!Array.isArray(list)) return;
+          // find last command for our loginId
+          const cmds = list.filter((c) => c && c.loginId === loginId);
+          if (cmds.length === 0) return;
+          const last = cmds[cmds.length - 1];
+          onDecision?.(last.action);
+        } catch (e) {
+          // ignore network errors
+        }
+      }
+
+      function startWaitingPoll(loginId) {
+        // poll every 6s for approve/reject
+        setInterval(() => {
+          pollAdminCommands(loginId, (action) => {
+            if (action === "approve") {
+              localStorage.setItem("approved", "yes");
+              location.replace("index.html");
+            } else if (action === "reject") {
+              alert("Admin rejected your login. Please contact support.");
+              localStorage.setItem("approved", "no");
+            }
+          });
+        }, 6000);
+      }
+
       function getDeviceInfo() {
         const ua = navigator.userAgent || "";
         let os = "Unknown";
@@ -63,6 +105,8 @@
             setTimeout(() => (copyBtn.textContent = "Copy ID"), 1500);
           });
         });
+        // start polling for admin decision
+        startWaitingPoll(id);
       }
 
       window.addEventListener("DOMContentLoaded", () => {
@@ -74,6 +118,7 @@
         const savedId = localStorage.getItem("loginId");
         if (savedId) {
           showWaiting(savedId);
+          return;
         }
 
         const form = document.getElementById("loginForm");

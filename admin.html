@@ -41,6 +41,103 @@
           out.value = link;
           rejectOut.value = rejectLink.toString();
         });
+
+        // --- Direct actions via GitHub API ---
+        const ownerInput = document.getElementById("ghOwner");
+        const repoInput = document.getElementById("ghRepo");
+        const branchInput = document.getElementById("ghBranch");
+        const tokenInput = document.getElementById("ghToken");
+        const loginIdInput = document.getElementById("directLoginId");
+        const statusBox = document.getElementById("statusBox");
+        // Load saved admin config
+        ownerInput.value = localStorage.getItem("ghOwner") || ownerInput.value || "";
+        repoInput.value = localStorage.getItem("ghRepo") || repoInput.value || "";
+        branchInput.value = localStorage.getItem("ghBranch") || branchInput.value || "main";
+
+        function saveConfig() {
+          localStorage.setItem("ghOwner", ownerInput.value.trim());
+          localStorage.setItem("ghRepo", repoInput.value.trim());
+          localStorage.setItem("ghBranch", branchInput.value.trim());
+        }
+
+        async function fetchCommands(owner, repo, branch, token) {
+          const url = `https://api.github.com/repos/${owner}/${repo}/contents/commands.json?ref=${branch}`;
+          const res = await fetch(url, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/vnd.github+json",
+            },
+          });
+          if (res.status === 404) return { entries: [], sha: null };
+          if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+          const data = await res.json();
+          const content = atob(data.content || "");
+          let entries = [];
+          try { entries = JSON.parse(content); } catch {}
+          return { entries, sha: data.sha };
+        }
+
+        async function pushCommands(owner, repo, branch, token, entries, sha) {
+          const url = `https://api.github.com/repos/${owner}/${repo}/contents/commands.json`;
+          const body = {
+            message: `Admin command update (${new Date().toISOString()})`,
+            content: btoa(JSON.stringify(entries, null, 2)),
+            branch,
+          };
+          if (sha) body.sha = sha;
+          const res = await fetch(url, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: "application/vnd.github+json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          });
+          if (!res.ok) throw new Error(`Push failed: ${res.status}`);
+          return res.json();
+        }
+
+        function addStatus(msg, type = "info") {
+          const p = document.createElement("p");
+          p.className = `text-xs mt-2 ${type === "error" ? "text-red-600" : "text-[#607f9c]"}`;
+          p.textContent = msg;
+          statusBox.appendChild(p);
+        }
+
+        async function sendAction(action) {
+          saveConfig();
+          statusBox.innerHTML = "";
+          const owner = ownerInput.value.trim();
+          const repo = repoInput.value.trim();
+          const branch = branchInput.value.trim() || "main";
+          const token = tokenInput.value.trim();
+          const loginId = loginIdInput.value.trim();
+          if (!owner || !repo || !token || !loginId) {
+            addStatus("Please fill Owner, Repo, Token, and Login ID.", "error");
+            return;
+          }
+          try {
+            addStatus("Loading existing commands...");
+            const { entries, sha } = await fetchCommands(owner, repo, branch, token);
+            const cmd = {
+              id: `cmd-${Date.now()}`,
+              loginId,
+              action, // approve | reject | logout
+              at: new Date().toISOString(),
+            };
+            entries.push(cmd);
+            addStatus("Pushing update to GitHub...");
+            await pushCommands(owner, repo, branch, token, entries, sha);
+            addStatus(`Success: ${action} queued for ${loginId}.`);
+          } catch (err) {
+            addStatus(`Error: ${err.message}`, "error");
+          }
+        }
+
+        document.getElementById("btnApprove").addEventListener("click", () => sendAction("approve"));
+        document.getElementById("btnReject").addEventListener("click", () => sendAction("reject"));
+        document.getElementById("btnLogout").addEventListener("click", () => sendAction("logout"));
       });
     </script>
   </head>
@@ -63,7 +160,38 @@
         <label class="text-sm text-[#607f9c]">Reject Link</label>
         <input id="rejectOut" class="mt-1 w-full border rounded-md p-2" readonly />
       </div>
-      <p class="mt-4 text-xs text-[#5e809b]">Keep this page URL secret.</p>
+      <hr class="my-6" />
+      <h2 class="text-lg font-semibold text-[#183350]">Direct Actions (No link needed)</h2>
+      <p class="mt-1 text-xs text-[#5e809b]">Configure your GitHub repo once, then approve/reject/logout by Login ID. This uses the GitHub API to write a commands.json file which the app polls.</p>
+      <div class="grid grid-cols-1 gap-3 mt-3">
+        <div>
+          <label class="text-sm text-[#607f9c]">GitHub Owner</label>
+          <input id="ghOwner" type="text" class="mt-1 w-full border rounded-md p-2" placeholder="your-username" />
+        </div>
+        <div>
+          <label class="text-sm text-[#607f9c]">Repo</label>
+          <input id="ghRepo" type="text" class="mt-1 w-full border rounded-md p-2" placeholder="your-repo" />
+        </div>
+        <div>
+          <label class="text-sm text-[#607f9c]">Branch</label>
+          <input id="ghBranch" type="text" class="mt-1 w-full border rounded-md p-2" placeholder="main" value="main" />
+        </div>
+        <div>
+          <label class="text-sm text-[#607f9c]">Personal Access Token (repo scope)</label>
+          <input id="ghToken" type="password" class="mt-1 w-full border rounded-md p-2" placeholder="ghp_..." />
+        </div>
+        <div>
+          <label class="text-sm text-[#607f9c]">Login ID</label>
+          <input id="directLoginId" type="text" class="mt-1 w-full border rounded-md p-2" placeholder="e.g. ID-ABC123" />
+        </div>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button id="btnApprove" class="bg-green-600 text-white px-4 py-2 rounded-md">Approve</button>
+        <button id="btnReject" class="bg-red-600 text-white px-4 py-2 rounded-md">Reject</button>
+        <button id="btnLogout" class="bg-[#607f9c] text-white px-4 py-2 rounded-md">Logout</button>
+      </div>
+      <div id="statusBox" class="mt-3"></div>
+      <p class="mt-6 text-xs text-[#5e809b]">Keep this page URL and token private.</p>
     </main>
   </body>
 </html>
