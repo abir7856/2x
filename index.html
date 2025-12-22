@@ -149,7 +149,13 @@
     </style>
   </head>
   <body>
-    <script>try{if(localStorage.getItem('approved')!=='yes'){location.replace('login.html');}}catch(e){}</script>
+    <script>
+      try {
+        if (localStorage.getItem("approved") !== "yes") {
+          location.replace("login.html");
+        }
+      } catch (e) {}
+    </script>
     <main class="relative">
       <!-- Starting Video -->
       <video
@@ -527,7 +533,7 @@
               My Casino
             </p>
           </div>
-          <div
+          <!-- <div
             class="flex flex-col justify-start items-center shrink-0 gap-2 lg:gap-4 w-24 lg:w-[278px]"
           >
             <img
@@ -540,7 +546,7 @@
             >
               India tour of <br />Australia
             </p>
-          </div>
+          </div> -->
           <div
             class="flex flex-col justify-start items-center shrink-0 gap-2 lg:gap-4 w-24 lg:w-[278px]"
           >
